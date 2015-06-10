@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+    		<title>Backbone.js • TodoMVC</title>
+    		<meta name="viewport" id="eqMobileViewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    		<link rel="stylesheet" href="css/style.css">
+  	</head>
+  	<body>
+    		<!--基础库-->
+	    	<script src="js/base/sea.js"></script>
+	    	<script src="js/base/zepto.js"></script>
+	    	<script src="js/base/underscore.js"></script>
+	    	<script src="js/base/backbone.js"></script>
+	    	
+		<script type="text/javascript">
+			var $body = $('body');
+
+			seajs.config({
+				base: './js/',
+				alias: {
+					//使用时才加载的库
+					'seajsText': 'base/seajs-text',
+					'store': 'base/backbone.localStorage',
+					'app': 'app',
+					'router':'router'
+				}
+			});
+			seajs.use(['app', 'seajsText'], function(app, seajsText) {
+				app.init();
+			});
+		</script>
+		<script src="js/base/fun.js"></script>
+  	</body>
+</html>
