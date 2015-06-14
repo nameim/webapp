@@ -3,30 +3,27 @@ define(function(require, exports, module) {
 	return Backbone.Router.extend({
 		routes: {
 			'': 'home',
-			'at/:module/:action(/*condition)': 'loadmodule'
+			':action(/*condition)': 'loadmodule'
 		},
 		home: function() {
-			this.loadmodule('index', 'index');
+			this.loadmodule('index');
 		},
-		//按照at/module/action(/conditions)格式的请求自动加载模块
-		loadmodule: function(module, action, conditions) {
-			//将参数字符串'a:123/b:456'转换为json对象{a:123, b:456}
-			var obj = {};
-			if(conditions && conditions.indexOf(':') > -1) {
-				conditions.replace(/(\w+)\s*:\s*([\w-]+)/g, function(a, b, c) {
-					b && (obj[b] = c);
-				});
-			} else {
-				obj = conditions;
+		//按照action(/conditions)格式的请求自动加载模块
+		loadmodule: function(action, conditions) {
+			//将参数字符串'update/1'转换为json对象[update, 1]
+			var arr = [];
+			if(conditions) {
+				arr = conditions.split('/');
 			}
 			//加载module目录下对应的模块
-			require.async(['module', module, action].join('/'), function(o) {
+			require.async(['modJs', action].join('/'), function(o) {
 				if(o) {
 					//显示隐藏
+					console.log(action);
 					$body.find('.app').hide();
-					$('.app-' + module).show();
+					$('.app-' + action).show();
 					//运行当前模块
-					o.run();
+					o.run(arr);
 				} else {
 					console.log('模块加载失败！');
 				}

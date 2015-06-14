@@ -4,5 +4,5 @@ $body.on('click', '.back', function() {
 	var $this = $(this),
 		next = $this.data('url');
 
-	window.location.hash = '#at/' + next;
+	window.location.hash = next;
 });
